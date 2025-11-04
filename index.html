@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>TradeProFX - Deriv Odd Bot</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #111;
+      margin: 0;
+    }
+
+    /* 🔘 Logout link styled as button */
+    a#logoutLink {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ff4d4d;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: all 0.25s ease;
+      z-index: 1000;
+    }
+    a#logoutLink:hover {
+      background: #e60000;
+      transform: scale(1.08);
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 70px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .login-section { display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; }
+    .login-section input { min-width:220px; padding:10px; border-radius:8px; border:1px solid #ccc; }
+    .login-section button, .login-section a.btn {
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      text-decoration:none;
+      border:none;
+      color:white;
+      background-color:#007bff;
+      transition: all 0.2s;
+    }
+    .login-section a.btn:hover, .login-section button:hover { background-color:#0056b3; }
+    .btn-group { display:flex; gap:10px; justify-content:center; margin-top:10px; flex-wrap:wrap; }
+    .btn-show-chart { padding:8px 14px; border-radius:20px; background:#16a34a; color:#fff; border:none; cursor:pointer; }
+    .btn-show-chart:hover { background:#15803d; }
+  </style>
+</head>
+<body>
+
+  <!-- 🔘 Logout Link (acts as a button) -->
+  <a id="logoutLink" href="login.html" title="Logout">⎋</a>
+
+  <div class="container">
+    <h2>TradeProFX - Deriv Odd Contract Bot</h2>
+
+    <!-- 🟢 Token Input Section -->
+    <div class="login-section">
+      <input type="text" id="token" placeholder="Enter your Deriv API Token" autocomplete="off" />
+      <button id="connectBtn">Connect</button>
+      <a href="https://app.deriv.com/account/api-token" target="_blank" class="btn">Generate API Key</a>
+    </div>
+
+    <!-- Account Section -->
+    <div id="account-section" class="hidden" style="margin-top:18px; text-align:center;">
+      <p><strong>Account Balance:</strong> <span id="balance">--</span> USD</p>
+      <p><strong>Current Tick:</strong> <span id="tickDisplay">--</span></p>
+
+      <div class="btn-group">
+        <button id="startTrading">Start</button>
+        <button id="stopTrading" disabled>Stop</button>
+        <button id="openChartBtn" class="btn-show-chart">📊 Open Candle Chart</button>
+        <a id="uploadBtn" class="btn-show-chart" href="upload.html">📁 Upload</a>
+      </div>
+    </div>
+
+    <div id="status" style="margin-top:12px;"></div>
+    <h3 style="margin-top:18px;">Trade History (simulated)</h3>
+    <ul id="history" style="list-style:none; padding:0;"></ul>
+  </div>
+
+  <!-- main app script -->
+  <script type="module" src="script.js"></script>
+
+  <!-- 🔥 Firebase Auth + Logout Link -->
+  <!-- 🔥 Reliable Logout Script -->
+<script type="module">
+  import { auth } from './firebase.js';
+  import { signOut, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+  const logoutLink = document.getElementById("logoutLink");
+
+  // ✅ Ensure user is logged in, else redirect
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      console.log("User not logged in → redirecting to login.html");
+      window.location.replace("login.html");
+    } else {
+      console.log("User logged in:", user.email);
+    }
+  });
+
+  // ✅ Logout process when the link is clicked
+  logoutLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Signing out user...");
+      await signOut(auth); // 👈 wait for Firebase sign-out to complete
+      sessionStorage.clear();
+      localStorage.clear();
+      console.log("✅ Signed out successfully — redirecting to login");
+      setTimeout(() => {
+        window.location.replace("login.html");
+      }, 500); // small delay to ensure Firebase clears
+    } catch (err) {
+      console.error("❌ Logout failed:", err);
+      alert("Logout failed — check console.");
+    }
+  });
+
+  // ✅ Prevent back navigation after logout
+  window.addEventListener("popstate", () => {
+    if (!auth.currentUser) window.location.replace("login.html");
+  });
+</script>
+
+  <!-- Prevent going back to index after logout -->
+  <script>
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.go(1);
+    };
+  </script>
+
+</body>
+</html>

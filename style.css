@@ -1,0 +1,236 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+h1, h2, h3 {
+  color: #0b3d91;
+  margin: 0 0 10px 0;
+}
+
+.btn {
+  display: inline-block;
+  background: #0b3d91;
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn:hover { background: #093173; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid #e1e6ef;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+th { background-color: #f4f6fa; }
+
+.table-wrap { overflow-x: auto; }
+
+.controls { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+/* ===== Base Styles ===== */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* ===== Container ===== */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+/* ===== Headings ===== */
+h1, h2, h3 {
+  color: #0b3d91;
+  margin: 0 0 10px 0;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-block;
+  background: #0b3d91;
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  background: #093173;
+  transform: translateY(-1px);
+}
+
+/* ===== Tables ===== */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+  min-width: 600px; /* ensures readability */
+}
+
+th, td {
+  border: 1px solid #e1e6ef;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f6fa;
+}
+
+/* ===== Controls (Buttons / Inputs Section) ===== */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.controls .btn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* ===== Inputs ===== */
+input, select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #0b3d91;
+  box-shadow: 0 0 3px rgba(11, 61, 145, 0.3);
+}
+
+/* ===== Logout Link/Button ===== */
+#logoutLink, #logoutBtn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#logoutLink:hover, #logoutBtn:hover {
+  background: #b52a35;
+}
+
+/* ===== Responsive Design ===== */
+
+/* --- Tablets and below --- */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 16px;
+  }
+
+  table {
+    font-size: 13px;
+    min-width: unset;
+  }
+
+  th, td {
+    padding: 6px 8px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls .btn {
+    width: 100%;
+  }
+}
+
+/* --- Mobile Phones --- */
+@media (max-width: 480px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    margin: 10px;
+    padding: 14px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h1, h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  input, select {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  #logoutLink, #logoutBtn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

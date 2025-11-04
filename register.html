@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | TradeProFX</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Create Account</h2>
+    <input type="email" id="email" placeholder="Enter your email" />
+    <input type="password" id="password" placeholder="Enter your password" />
+    <button id="registerBtn">Register</button>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+    <p id="status"></p>
+  </div>
+
+  <script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBf04hqyigWeeCBLzFeu4WZ1tCvno_yAVM",
+      authDomain: "bhavani-143143.firebaseapp.com",
+      projectId: "bhavani-143143",
+      storageBucket: "bhavani-143143.firebasestorage.app",
+      messagingSenderId: "83724577201",
+      appId: "1:83724577201:web:08bd92c6f42c433c08b590",
+      measurementId: "G-VMS4MS2PVV"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Registration logic
+    const registerBtn = document.getElementById("registerBtn");
+    const status = document.getElementById("status");
+
+    registerBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        status.textContent = "⚠️ Please fill out all fields.";
+        status.className = "error";
+        return;
+      }
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        status.textContent = "✅ You have successfully registered!";
+        status.className = "success";
+
+        // Clear input fields after success
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+      } catch (error) {
+        console.error(error);
+        status.textContent = "❌ " + error.message;
+        status.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>
